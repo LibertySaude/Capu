@@ -63,6 +63,7 @@
             width: 90%;
             max-width: 400px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         .form-group {
             margin-bottom: 15px;
@@ -93,6 +94,12 @@
         .close-btn {
             background-color: #d9534f;
             margin-top: 10px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: auto;
+            padding: 5px 10px;
+            font-size: 14px;
         }
         .submit-btn:hover {
             background-color: #218838;
@@ -109,15 +116,14 @@
     <div class="equip-container">
         <div class="equip-item">
             <img src="Top.jpg" alt="Refrigerador">
-            
-        
             <button onclick="openModal('Refrigerador')">Faça Orçamento</button>
         </div>
     </div>
 
     <!-- Modal para formulário de orçamento -->
-    <div class="modal" id="modal">
+    <div class="modal" id="modal" onclick="closeModal(event)">
         <div class="modal-content">
+            
             <form id="agendamentoForm">
                 <div class="form-group">
                     <label for="nome">Nome</label>
@@ -136,7 +142,13 @@
 
                 <div class="form-group">
                     <label for="tipo">Tipo de Equipamento</label>
-                    <input type="text" id="tipo" name="tipo" readonly>
+                    <select id="tipo" name="tipo" required>
+                        <option value="">Selecione...</option>
+                        <option value="Geladeira">Geladeira</option>
+                        <option value="Máquina de Lavar">Máquina de Lavar</option>
+                        <option value="Tanque de Lavar">Tanque de Lavar</option>
+                        <option value="Frize">Freezer</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -145,7 +157,6 @@
                 </div>
 
                 <button type="button" class="submit-btn" onclick="enviarWhatsApp()">Enviar Orçamento</button>
-                
             </form>
         </div>
     </div>
@@ -156,8 +167,10 @@
             document.getElementById("modal").style.display = "flex";
         }
 
-        function closeModal() {
-            document.getElementById("modal").style.display = "none";
+        function closeModal(event) {
+            if (event.target === document.getElementById("modal") || event.target.className === "close-btn") {
+                document.getElementById("modal").style.display = "none";
+            }
         }
 
         function enviarWhatsApp() {
